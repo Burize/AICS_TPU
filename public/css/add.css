@@ -1,0 +1,22 @@
+form{
+
+    box-shadow: 0 0 5px 2px #7B7B7B;;
+    padding: 2% 4%;
+    width:85%;
+}
+input[name='title']
+{
+    width: 70%;
+}
+input[name='cell']{
+margin-bottom: 15px;}
+input[type='submit']{
+  
+}
+textarea{
+width:95%;
+}
+
+form{
+margin:auto;
+}

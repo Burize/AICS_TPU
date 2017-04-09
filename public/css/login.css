@@ -1,0 +1,36 @@
+.popup {
+    margin:140px auto 0px auto;
+    width:220px;
+    height: 220px;
+
+     background-color: #2B2B2B;
+    border-radius:5px;
+    box-shadow: 0 0 2px 1px #7B7B7B;
+    color:#F5F5F5;
+     
+padding-top: 10px;
+}
+div{
+   
+}
+#logo{
+
+margin-left:10%;
+
+}
+input[type='submit']{
+   
+    margin: 20px 0; 
+}
+input{
+    color:black;
+}
+#error{
+    display: none;
+}
+
+#all{
+
+text-align:center;
+}
+

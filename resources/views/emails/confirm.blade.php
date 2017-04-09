@@ -1,0 +1,1 @@
+Для подтверждение регистрации, пройдите по <a href="http://aics.tpu/registration/confirm/{{$token}}">ссылке</a>

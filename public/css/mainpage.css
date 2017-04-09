@@ -1,0 +1,27 @@
+.list-group>a>h2,img,section{
+    display:inline-block;
+  
+}
+
+.list-group>a{
+position:relative;
+}
+
+.list-group a section{
+position: absolute;
+    right:5%;
+    bottom:5%;
+}
+
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_desc:after,
+table.dataTable thead .sorting_asc_disabled:after,
+table.dataTable thead .sorting_desc_disabled:after {
+  position: absolute;
+  bottom: 15px;
+  right: -20px;
+  display: block;
+  font-family: 'Glyphicons Halflings';
+  opacity: 0.5;
+}

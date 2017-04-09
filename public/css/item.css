@@ -1,0 +1,16 @@
+img{
+    float: left;   
+}
+article{
+    position: relative;
+    min-height: 80%;
+}
+#amount{
+    position: absolute;
+    right: 5%;
+    bottom: 5%;
+    font-size: 20px;
+}
+article a{
+    font-size: 16px;
+}
