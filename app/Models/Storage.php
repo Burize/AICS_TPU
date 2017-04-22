@@ -44,7 +44,7 @@ class Storage extends Model
     
     public function Devices()
     {
-        return $this->hasOne('App\Models\Device','id','device_id');
+         return $this->belongsTo('App\Models\Device','device_id','id');
     }
     
     public static function _Delete($id)

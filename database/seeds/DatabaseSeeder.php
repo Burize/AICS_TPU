@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Device;
 use App\Models\Storage;
 use App\Models\User;
+use App\Models\Group;
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,11 +24,46 @@ class DevicesSeeder extends Seeder
 {
     public function run()
     {
-        
-       // DB::table('devices')->delete();
-      //  DB::table('storages')->delete();
+         // DB::table('lends')->delete();
+        // DB::table('storages')->delete();
+      //   DB::table('users')->delete();
+      //  DB::table('devices')->delete();
+       // DB::table('groups')->delete();
+   
            
-       
+       $st = new User;
+        $st->login='root';
+        $st->password=password_hash("password",PASSWORD_DEFAULT);
+        $st->FIO="Администратор";
+        $st->user_type="admin";
+        $st->email="your@email.ru";
+        $st->save();
+        
+        $st = new Group;
+        $st->title="8И4А";
+        $st->save();
+        
+        $st = new User;
+        $st->login='dkh1';
+        $st->password=password_hash("password",PASSWORD_DEFAULT);
+        $st->FIO="Хурсевич Дмитрий Константинович";
+        $st->Group()->associate(Group::where('title','=','8И4А')->first() );
+        $st->email="dkh1@tpu.ru";
+        $st->save();
+        
+        $st = new Device;
+        $st->title="Микроконтроллеры STM32 VS1003B";
+        $st->description="Серийный данных и интерфейс управления; интерфейс SPI, ведет провода управляющего сигнала, 1 х наушников и интерфейс аудио, 1 х микрофон для записи, 1 х Линейный вход; Бортовой 3.3V / 2.5V LDO 1117; Максимальное обеспечение 800 мА; Один источник питания: DC 5V конденсатор фильтра; 12.288MHz кристалла.";
+        $st->save();
+          
+        $st = new Storage;
+        $st->Devices()->associate(Device::where('title','=','Микроконтроллеры STM32 VS1003B')->first() ); 
+        $st->cell="F1";
+        $st->amount=1;
+        $st->save();
+        
+        
+        
       /*  $st = new User;
         $st->login='tma1';
         $st->password=password_hash("password",PASSWORD_DEFAULT);
@@ -192,7 +228,7 @@ class DevicesSeeder extends Seeder
         $st->email="vsf1@tpu.ru";   
         $st->save();*/
         
-         $st = new User;
+       /*  $st = new User;
         $st->login='test1';
         $st->password=password_hash("password",PASSWORD_DEFAULT);
         $st->FIO="ФИО";
@@ -347,7 +383,7 @@ class DevicesSeeder extends Seeder
         $st->password=password_hash("password",PASSWORD_DEFAULT);
         $st->FIO="ФИО";    
         $st->email="mss1@tpu.ru";
-        $st->save();
+        $st->save();*/
      /*   $d1 = new Device;
         $d1->title = 'Device #1';    
         $d1->description = 'Description #1';

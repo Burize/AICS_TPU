@@ -10,7 +10,7 @@
     {
         $.post("/item/delete",{_token: '{{csrf_token()}}', id:{{$device->id}}}, function(data){
             // window.location.replace("http://aics.tpu/"); 
-             window.location.replace("http://lab117a.it.aics.ru/"); 
+             window.location.replace(window.location.origin ); 
         });
     }
     

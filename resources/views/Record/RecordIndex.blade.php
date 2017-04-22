@@ -31,7 +31,14 @@
                {
          
              $('tr[id='+id+']').children("td[name='return_date']").html(data);
-             $('tr[id='+id+']').children("td[name='return']").children("a:last-child").css("color","#32CD32");
+             var icon = $('tr[id='+id+']').children("td[name='return']").children("a:last-child").removeAttr("href");
+            icon = icon.children("span")
+             icon.removeClass("hint--info");
+             icon.addClass("hint--success");
+
+             icon.attr("data-hint","Элемент уже возвращен");
+        
+             icon.children("span").css("color","#32CD32");
         });
     }
     
@@ -99,6 +106,7 @@
             <th class="t_element">Элемент</th>
             <th class="t_cell">Ячейка</th>
             <th class="t_fio">ФИО</th>
+            <th class="t_group">Группа</th>
             <th class="t_on">С</th>
             <th class="t_for">До</th>
             <th class="t_return">Возвращено</th>
@@ -110,7 +118,8 @@
    <tr id="{{$lend->id}}">
     <td><a href=/item?id={{$lend->device_id}}>{{$lend->title}}</a></td>
     <td>{{$lend->cell}}</td>
-    <td>{{$lend->fio}}</td>
+    <td >{{$lend->fio}}</td>
+    <td style="padding-left: 1em;">{{$lend->group}}</td>
     <td>{{$lend->lend_at}}</td>
     <td>{{$lend->lend_to}}</td>
     @if($lend->return_at)
@@ -120,8 +129,9 @@
     @endif
     <td name="return">
         <a href="javascript:Message('{{$lend->fio}}',{{$lend->user_id}})">
-            <span class="hint  hint--top  hint--info" data-hint="Отправить письсмо">
-            <span class="glyphicon glyphicon-envelope "></span></a>
+            <span class="hint  hint--top  hint--info" data-hint="Отправить письмо">
+            <span class="glyphicon glyphicon-envelope "></span>
+        </a>
          @if($lend->return_at)
             <span class="hint  hint--top  hint--success" data-hint="Элемент уже возвращен"> 
                 <span class="glyphicon glyphicon-ok" style="color:#32CD32"></span>
@@ -129,8 +139,9 @@
             @else
             <a href="javascript:ReturnForm({{$lend->id}})">
                  <span class="hint  hint--top  hint--info" data-hint="Вернуть элемент"> 
-                     <span class="glyphicon glyphicon-ok"></a>
+                     <span class="glyphicon glyphicon-ok"></span>  
                 </span>
+            </a>
             @endif
     </td>
 </tr>

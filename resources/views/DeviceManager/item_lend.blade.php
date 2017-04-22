@@ -10,13 +10,13 @@
 
 <script type="text/javascript">
  var str
-    function SelectGroup(value)
+     function SelectGroup(value)
     {
         $("#users").html("");
        
         str[1].forEach(function(element, index)
        {
-            if(element.group == value)
+            if(element.group_id == value)
                 {
                       var opt = document.createElement('option');
                       opt.innerHTML = element.fio;
@@ -32,7 +32,7 @@
        
         str[1].forEach(function(element, index)
        {
-            if(element.group == null)
+            if(element.group_id == null)
                 {
                       var opt = document.createElement('option');
                       opt.innerHTML = element.fio;
@@ -48,7 +48,7 @@
        
         str[1].forEach(function(element, index)
        {
-            if(element.group != null)
+            if(element.group_id != null)
                 {
                       var opt = document.createElement('option');
                       opt.innerHTML = element.fio;
@@ -75,11 +75,11 @@ $(document).ready(function(){
                   str = JSON.parse(data)
                   str[0].forEach(function(element,index)
                              {
-                       var opt = document.createElement('option');
-                       opt.innerHTML=element.group;
-                      opt.value=element.group;
+                        var opt = document.createElement('option');
+                       opt.innerHTML=element.title;
+                      opt.value=element.id;
                       opt.onclick=function(){SelectGroup(opt.value);}
-                       $("#groups").append(opt);       
+                       $("#groups").append(opt);   
                   });
                     SelectStudents();
                   }

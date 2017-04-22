@@ -28,7 +28,7 @@ Route::post('/add',['as'=>'add','uses'=>'DeviceManager@Add', 'middleware' => 'ma
 Route::get('/login',['as'=>'getlogin','uses'=>'Profil@Login']);
 Route::post('/login',['as' => "login",'uses'=>'Profil@Login']); 
 route::get('/profil/logout',['as'=>'Logout','uses'=>'Profil@Logout']);
-route::get('/profil',['as'=>'profil','uses'=>'Profil@Index']);
+route::get('/profil',['as'=>'profil','uses'=>'Profil@Index','middleware' => 'auth']);
 
 route::get('/item',['as'=>'Item','uses'=>'DeviceManager@ItemIndex',  'middleware' => 'auth']);
 route::post('/item/delete',['as'=>'Delete','uses'=>'DeviceManager@Delete', 'middleware' => 'manager']);

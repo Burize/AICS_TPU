@@ -17,7 +17,8 @@ class Record extends Controller
             ->join('users','user_id','=','users.id')
             ->join('devices','lends.device_id','=','devices.id')
             ->join ('storages','storages.device_id','=','devices.id')
-            ->select('cell','lends.id','title','.lends.device_id','fio','user_id','lend_at','lend_to','return_at')
+            ->join ('groups','users.group_id','=','groups.id')
+            ->select('cell','lends.id','devices.title','groups.title AS group','.lends.device_id','fio','user_id','lend_at','lend_to','return_at')
             ->get();
         
         return view( "Record.RecordIndex",['lends'=>$lends]);

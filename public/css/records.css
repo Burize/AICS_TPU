@@ -26,6 +26,10 @@ width: 28em;
 padding-left:0px;
     width: 14em;
 }
+.t_group{
+      width:5em;
+  
+}
 .t_on, .t_for{
     width:7em;
 }
@@ -36,7 +40,7 @@ padding-left:0px;
      width:3em;
 }
 td{
-    padding: 5px 0px;
+    padding: 6px 0px;
     border-bottom: solid 1px #7B7B7B;
 }
 
