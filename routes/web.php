@@ -13,7 +13,7 @@
 
 Route::get('/',['as' => 'main', 'uses' => 'MainPage@index', 'middleware' => 'auth']);
 
-route::get('/administrate',['as'=>'Admin', 'uses'=>'Profil@Admin', 'middleware' => 'admin']);
+//route::get('/administrate',['as'=>'Admin', 'uses'=>'Profil@Admin', 'middleware' => 'admin']);
 route::post('/administrate/add',['as'=>'ManagerAdd', 'uses'=>'Profil@AddManager', 'middleware' => 'admin']);
 route::post('/administrate/remove',['as'=>'ManagerRemove', 'uses'=>'Profil@RemoveFromManagers', 'middleware' => 'admin']);
 route::post('/administrate/add_user',['as'=>'UserAdd', 'uses'=>'Profil@AddUser', 'middleware' => 'admin']);

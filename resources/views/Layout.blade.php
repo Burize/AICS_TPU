@@ -25,9 +25,11 @@
                       @can('manage')
                      <li><a href="/records">Картотека</a></li>
                      <li><a href="/add"> Добавить</a></li>
+<!--
                       @can('administrate')
                      <li><a href="/administrate"> Администрирование пользователей</a></li>
                      @endcan
+-->
                      @endcan
                      </ul>
                        

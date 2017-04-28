@@ -75,5 +75,11 @@ width: 110px;
     right:2%;
     top:2%;
     color:#F5F5F5;
+    
+
+}
+.glyphicon-remove{
+    
+    cursor: pointer;
 }
 

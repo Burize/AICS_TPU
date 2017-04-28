@@ -15,6 +15,8 @@ class Profil extends Controller
 
 	public function Index()   
     {
+        if(Auth::user()->user_type !='admin')
+        {
       $lends = DB::table('lends')
             ->join('users','user_id','=','users.id')
             ->join('devices','device_id','=','devices.id')
@@ -24,7 +26,11 @@ class Profil extends Controller
         
         return view( "Profil.Index",['lends'=>$lends]);
     
-
+        }
+        else
+        {
+           return view("Profil.Admin");
+        }
     }
 
     
@@ -53,10 +59,7 @@ class Profil extends Controller
         return back();
     }
     
-    public function Admin()
-    {
-        return view("Profil.Admin");
-    }
+  
 
     public function GetUser( Request $r)
     {
@@ -118,7 +121,7 @@ class Profil extends Controller
         if($query)
             return "email";
         
-        if(!preg_match("/^[а-яa-z\d][а-яa-z\d]*[а-яa-z\d]$/iu", $r->password)|| strlen($r->password)<6)
+        if(!preg_match("/^[а-яa-z\d][а-яa-z\d]*[а-яa-z\d]$/iu", $r->_password)|| strlen($r->_password)<6)
                        return "password";
         
         if($group_id == null && $group != null )
@@ -133,7 +136,7 @@ class Profil extends Controller
         $user->fio=$r->fio;
         $user->email = $r->email;
         $user->login= $r->login;
-        $user->password=password_hash($r->password,PASSWORD_DEFAULT);
+        $user->password=password_hash($r->_password,PASSWORD_DEFAULT);
         if($group_id == null)
             $user->group_id = null;
         else
@@ -185,12 +188,12 @@ class Profil extends Controller
         if($query)
             return "email";
          }
-         if($r->password !="")
+         if($r->_password !="")
          {
-              if(!preg_match("/^[а-яa-z\d][а-яa-z\d]*[а-яa-z\d]$/iu", $r->password)|| strlen($r->password)<6)
+              if(!preg_match("/^[а-яa-z\d][а-яa-z\d]*[а-яa-z\d]$/iu", $r->_password)|| strlen($r->_password)<6)
                        return "password";
              else
-                  $user->password=password_hash($r->password,PASSWORD_DEFAULT);
+                  $user->password=password_hash($r->_password,PASSWORD_DEFAULT);
          }
        
          if($group_id == null && $group != null )
@@ -207,7 +210,7 @@ class Profil extends Controller
     
         $old_group =  $user->group_id;
         
-        if($group_id == null)
+        if($group_id == null && $group == null )
             $user->group_id = null;
         else
              $user->Group()->associate(Group::where('title','=',$group)->first() );

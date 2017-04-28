@@ -40,6 +40,7 @@
                   SelectStudents();
               });   
         
+        
         $("#btn_add").click(function(){
             $("#add_std").show();
         });
@@ -147,6 +148,8 @@
                     }
             })
         });
+        
+  
     });
     
      function SelectGroup(value)
@@ -199,6 +202,8 @@
     
     function Confirm(id,fio) {
     
+        CloseReturn();
+        CloseReturn2();
      var question = "Вы уверены, что хотите убрать пользователя \n ("+fio+") \n из управляющего состава?"
         $('#question').html(question);
         $('#confirm').show();
@@ -220,12 +225,14 @@
     
     function CloseReturn()
     {
+     
       $('#add_std input').not("input[type='submit']").not("input[type='hidden']").val("");
     $('#add_std').hide();
     }
     
     function CloseReturn2()
     {
+       
       $('#update_std input').not("input[type='submit']").not("input[type='hidden']").val("");
     $('#update_std').hide();
     }
@@ -268,21 +275,21 @@
 </div>
 <div id="add_std">
     <a id="close" href="javascript:CloseReturn()"><span class="glyphicon glyphicon-remove"></span></a>
-<form >
+<form autocomplete="off">
     <label>
-        Группа: <input type="text"  name="group">
+        Группа: <input type="text"  name="group" autocomplete="off">
     </label>
     <label>
-        ФИО:<input type="text" required name="fio">
+        ФИО:<input type="text" required name="fio" autocomplete="off">
     </label>
     <label>
-        Почта:<input type="text" required name="email">
+        Почта:<input type="text" required name="email" autocomplete="off">
     </label>
     <label>
-        Логин:<input type="text" required name="login">
+        Логин:<input type="text" required name="login" autocomplete="off">
     </label>
     <label>
-        Пароль:<input type="text" required name="password">
+        Пароль:<input type="password" required name="_password" autocomplete="new-password">
     </label>
     <input type="submit" value="Добавить">
       <input type="hidden" name="_token" value="{{csrf_token()}}"/>
@@ -290,21 +297,21 @@
 </div>
 <div id="update_std">
     <a id="close" href="javascript:CloseReturn2()"><span class="glyphicon glyphicon-remove"></span></a>
-<form >
+<form autocomplete="off">
     <label>
-        Группа: <input type="text"  name="group">
+        Группа: <input type="text"  name="group" autocomplete="off">
     </label>
     <label>
-        ФИО:<input type="text" required name="fio">
+        ФИО:<input type="text" required name="fio" autocomplete="off">
     </label>
     <label>
-        Почта:<input type="text" required name="email">
+        Почта:<input type="text" required name="email" autocomplete="off">
     </label>
     <label>
-        Логин:<input type="text" required name="login">
+        Логин:<input type="text" required name="login" value=""autocomplete="off">
     </label>
     <label>
-        Пароль:<input type="text" name="password">
+        Пароль:<input type="password" name="_password" value="" autocomplete="new-password">
     </label>
     <input type="submit" value="Добавить">
       <input type="hidden" name="_token" value="{{csrf_token()}}"/>
