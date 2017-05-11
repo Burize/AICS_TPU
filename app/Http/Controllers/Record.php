@@ -18,7 +18,7 @@ class Record extends Controller
             ->join('devices','lends.device_id','=','devices.id')
             ->join ('storages','storages.device_id','=','devices.id')
             ->join ('groups','users.group_id','=','groups.id')
-            ->select('cell','lends.id','devices.title','groups.title AS group','.lends.device_id','fio','user_id','lend_at','lend_to','return_at')
+            ->select('cell','lends.id','devices.title','groups.title AS group','.lends.device_id','fio','user_id','lend_at','lend_to','return_at', 'lend_amount', 'return_amount')
             ->get();
         
         return view( "Record.RecordIndex",['lends'=>$lends]);
@@ -38,10 +38,13 @@ class Record extends Controller
         return 'ok';
     }
 
-    public function _Return(Request$r)
+    public function _Return(Request $r)
     {
-         Storage::Increase($r->_device_id);
-      return Lend::_Return($r->_id);
-        // return json_encode( Lend::Return($r->id),JSON_UNESCAPED_UNICODE);
+        
+        $l = Lend::find($r->id);
+         Storage::Increase($l->device_id, $r->amount);
+        Lend::_Return($r->id,$r->amount);
+        
+        return "OK";
     }
 }

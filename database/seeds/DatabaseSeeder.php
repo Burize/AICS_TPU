@@ -36,6 +36,7 @@ class DevicesSeeder extends Seeder
         $st->password=password_hash("password",PASSWORD_DEFAULT);
         $st->FIO="Администратор";
         $st->user_type="admin";
+        $st->token="AAAAAA";
         $st->email="your@email.ru";
         $st->save();
         
@@ -49,6 +50,7 @@ class DevicesSeeder extends Seeder
         $st->FIO="Хурсевич Дмитрий Константинович";
         $st->Group()->associate(Group::where('title','=','8И4А')->first() );
         $st->email="dkh1@tpu.ru";
+        $st->token="BBBBBB";
         $st->save();
         
         $st = new Device;
@@ -59,7 +61,7 @@ class DevicesSeeder extends Seeder
         $st = new Storage;
         $st->Devices()->associate(Device::where('title','=','Микроконтроллеры STM32 VS1003B')->first() ); 
         $st->cell="F1";
-        $st->amount=1;
+        $st->amount=3;
         $st->save();
         
         

@@ -72,7 +72,7 @@ class Profil extends Controller
         else
             $group = null;
         
-       return ['fio' => $usr->fio, 'group' => $group, 'email'=> $usr->email, 'login'=>$usr->login];
+       return ['fio' => $usr->fio, 'group' => $group, 'email'=> $usr->email, 'login'=>$usr->login, 'token'=>$usr->token];
     }
     
     public function GetUsers()
@@ -101,28 +101,39 @@ class Profil extends Controller
             if($group_id)
                 $group_id = $group_id->id;
         }
-       
-        $query = User::where('group_id','=',$group_id)
-            ->where('fio','=',$r->fio)
-            ->first();
         
-       
         
-        if($query)
-            return "exist";
+           $query = User::where('group_id','=',$group_id)
+           ->where('fio','=',$r->fio)
+            ->orWhere('login','=',$r->login)
+            ->orWhere('email','=',$r->email)
+            ->orWhere('token','=',$r->token)->first();
         
-         $query = User::where('login','=',$r->login)->first();
+      
         
         if($query)
-            return "login";
-                             
-        $query = User::where('email','=',$r->email)->first();
+        {
+            if($query->login == $r->login)
+                 return "exist_login";
+            
+            if($query->email == $r->email)
+                 return "exist_email";
+            
+             if($query->token == $r->token)
+                 return "exist_token";
+            
+             return "exist_user";
+        }
+
         
-        if($query)
-            return "email";
         
         if(!preg_match("/^[а-яa-z\d][а-яa-z\d]*[а-яa-z\d]$/iu", $r->_password)|| strlen($r->_password)<6)
-                       return "password";
+                       return "invalid_password";
+        
+        
+          if(!preg_match("/^[a-z\d][a-z\d]*[a-z\d]$/iu", $r->token)|| strlen($r->token) != 6)
+                       return "invalid_token";
+        
         
         if($group_id == null && $group != null )
         {
@@ -136,6 +147,7 @@ class Profil extends Controller
         $user->fio=$r->fio;
         $user->email = $r->email;
         $user->login= $r->login;
+         $user->token= "asdasd";
         $user->password=password_hash($r->_password,PASSWORD_DEFAULT);
         if($group_id == null)
             $user->group_id = null;
@@ -148,7 +160,7 @@ class Profil extends Controller
     
     public function UpdateUser(Request $r)
     {
-      
+     //-----------------> СДЕЛАТЬ ПРОВЕРКУ ОДНИМ ЗАПРОСОМ 
           $user = User::find($r->id);
          if(!$user) return "err";
          
@@ -168,7 +180,7 @@ class Profil extends Controller
                 ->first();
 
             if($query)
-                return "exist";
+                return "exist_user";
         
          }
          
@@ -177,7 +189,7 @@ class Profil extends Controller
              $query = User::where('login','=',$r->login)->first();
 
             if($query)
-                return "login";
+                return "exist_login";
          }
          
            if($r->email != $user->email)
@@ -186,8 +198,10 @@ class Profil extends Controller
         $query = User::where('email','=',$r->email)->first();
         
         if($query)
-            return "email";
+            return "exist_email";
          }
+        
+        
          if($r->_password !="")
          {
               if(!preg_match("/^[а-яa-z\d][а-яa-z\d]*[а-яa-z\d]$/iu", $r->_password)|| strlen($r->_password)<6)
@@ -196,6 +210,19 @@ class Profil extends Controller
                   $user->password=password_hash($r->_password,PASSWORD_DEFAULT);
          }
        
+         if( $user->token != $r->token)
+         {
+                           
+            $query = User::where('token','=',$r->token)->first();
+
+            if($query)
+                return "exist_token";
+
+            if(!preg_match("/^[a-z\d][a-z\d]*[a-z\d]$/iu", $r->token)|| strlen($r->token) != 6)
+                           return "invalid_token";
+
+        }
+        
          if($group_id == null && $group != null )
         {
             $g = new  Group;
@@ -222,6 +249,7 @@ class Profil extends Controller
            Group::destroy($old_group);
         
         return "OK";
+        
     }
     
     public function DeleteUser(Request $r)

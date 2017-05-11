@@ -35,10 +35,10 @@ class Storage extends Model
         $device->save();
     }
     
-      public static function Increase($id )
+      public static function Increase($id, $amount )
     {
         $device = Storage::where('device_id',$id)->first();
-        $device->amount=  $device->amount + 1;
+        $device->amount+= $amount ;
         $device->save();
     }
     

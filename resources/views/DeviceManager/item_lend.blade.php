@@ -67,9 +67,10 @@
 $(document).ready(function(){
      $('.datepicker').datepicker();
 });
-    $(document).ready(
-      function GetStudents(){
-       
+   
+    
+$(document).ready(function (){
+    
        var token={'_token': '{{csrf_token()}}' };
               $.post("/getusers", token, function(data){                  
                   str = JSON.parse(data)
@@ -85,8 +86,7 @@ $(document).ready(function(){
                   }
                 );   
        
-            }
-          );
+            });
 </script>
 @stop
 @section('content')
@@ -105,12 +105,13 @@ $(document).ready(function(){
     <input class="datepicker" name="lend_at" id="lend_at"value=<?= date('Y-m-d',time())?>><br>
     <label for="lend_to"  id="l_lend_to" >Дата возврата:</label>
     <input class="datepicker" name="lend_to" id="lend_to" > <br>
+    <label for="amount">Количество: </label> <input type="number" name="amount" id="amount" min="0" max="{{$amount}}"> <br>
     <label id="cell">Ячейка: {{$cell}}</label>
     @if($amount>0)
     <input type="hidden" id="user" name="user_id" value="">
     <input type="hidden" name="device_id" value=<?= $_GET['id']?>>
      {{csrf_field()}}
-    <input type="submit" value="Выдать">
+    <input type="submit" value="Выдать" class=" btn btn-primary">
     @else
     <p id="not_available">Нет в наличии</p>
     @endif

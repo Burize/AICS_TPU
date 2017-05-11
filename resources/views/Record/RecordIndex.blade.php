@@ -26,7 +26,7 @@
    
     function Return(id, device_id)
     {       
-        CloseReturn();
+       
          $.post("records/return",{_token: "{{csrf_token()}}", _id:id,_device_id:device_id},function(data)
                {
          
@@ -47,17 +47,44 @@
         {!!$lends!!}.forEach(function(element,index){
             if(element.id== id)
                 {
-                     $('#fio').html(element.fio);
-                     $('#title').html(element.title);           
-                   $('#button_return').unbind();
-                    $('#button_return').click(function() {
-        Return(element.id, element.device_id);
-            });
+                     
+                     $('#ReturnModal h4').html(element.title);  
+                      $("#ReturnForm input[name='amount']").attr('max',element.lend_amount - element.return_amount);
+                    
+                    
+                     $('#ReturnForm').submit(function(e) {
+                       // Return(element.id, element.device_id);
+                         e.preventDefault();
+                         
+                          var data =  $(this).serializeArray();
+                         data.push({name:"id", value: id });
+                         
+                          $.post("records/return",data,function(response)
+                               {
+                              
+                              if(response=="OK")
+                               location.reload();
+                               else
+                               {
+                                   alert("При выполнении операции возникла ошибка");
+                               }
+                               
+                               
+                           ///  $('tr[id='+id+']').children("td[name='return_date']").html(data);
+                             //var icon = //$('tr[id='+id+']').children("td[name='return']").children("a:last-child").removeAttr("href");
+                           // icon = icon.children("span")
+                           //  icon.removeClass("hint--info");
+                           //  icon.addClass("hint--success");
+
+                           //  icon.attr("data-hint","Элемент уже возвращен");
+
+                           //  icon.children("span").css("color","#32CD32");
+                        });
+                    });
                 }
         });
        
-       if( $('#PopUpreturn').css("display")=="none" )
-           $('#PopUpreturn').fadeToggle();
+       $("#ReturnModal").modal('show');
     }
     
     function Message(name,id)
@@ -71,20 +98,7 @@
         if( $('#PopUp').css("display")=="none" )
            $('#PopUp').fadeToggle();
     }
-    
-    function CloseSend()
-    {
-       $('#namee').html("");
-       $('#PopUp').fadeToggle();
-    }
-        
-    function CloseReturn()
-    {
-      $('#fio').html();
-      $('#title').html();
-    $('#PopUpreturn').fadeToggle();
-    }
-    
+      
     function Send(id)
     {
          CloseSend()
@@ -104,6 +118,7 @@
         <thead>
             <tr>
             <th class="t_element">Элемент</th>
+            <th class="t_amount">Количество</th>
             <th class="t_cell">Ячейка</th>
             <th class="t_fio">ФИО</th>
             <th class="t_group">Группа</th>
@@ -117,6 +132,7 @@
 @foreach($lends as $lend)
    <tr id="{{$lend->id}}">
     <td><a href=/item?id={{$lend->device_id}}>{{$lend->title}}</a></td>
+    <td>{{$lend->return_amount}} / {{$lend->lend_amount}}</td>
     <td>{{$lend->cell}}</td>
     <td >{{$lend->fio}}</td>
     <td style="padding-left: 1em;">{{$lend->group}}</td>
@@ -159,7 +175,43 @@
 </form>
     <a id="close" href="javascript:CloseSend()"><span class="glyphicon glyphicon-remove"></span></a>
 </div>
-   <div id="PopUpreturn">
+   
+    <div class="modal fade" id="ReturnModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Вернуть элемент</h4>      
+        </button>
+      </div>
+      <div class="modal-body">
+          
+      <form class="form-horizontal" id="ReturnForm">
+          <div class="form-group">
+            <label for="inputEmail" class="col-xs-2 control-label"> Количество:</label>
+            <div class="col-xs-10">
+              <input type="number" min="1"; class="form-control" name="amount" autocomplete="off" placeholder="Введите количество возвращаемых элементов">
+            </div>
+          </div>
+  
+  <div class="form-group">
+    <div class="col-xs-offset-2 col-xs-10">
+      <button type="submit" class="btn btn-primary">Вернуть</button>
+    </div>
+  </div>
+            <input type="hidden" name="_token" value="{{csrf_token()}}"/>
+</form>
+      </div>
+ 
+    </div>
+  </div>
+</div>
+
+
+
+
+<!--
+    <div id="PopUpreturn">
     <form id="form" method='post'>
     <p id="fio"></p><br>
     <p id="title"></p><br>
@@ -168,6 +220,7 @@
 </form>
     <a id="close" href="javascript:CloseReturn()"><span class="glyphicon glyphicon-remove"></span></a>
     </div>
+-->
     @else
     <h2>Записей нет</h2>
     @endif

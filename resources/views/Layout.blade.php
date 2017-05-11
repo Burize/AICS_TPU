@@ -1,15 +1,15 @@
 <DOCTYPE !html>
 <head>
     <meta charset="utf-8"/>
-     <link rel=stylesheet href="/public/css/header_footer.css">
+    <link rel=stylesheet href="/public/css/header_footer.css">
     <link href="/public/css/bootstrap.css" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="/public/datatables/css/dataTables.bootstrap.css"/>
   
     
-  <script type="text/javascript" src="/public/js/jquery-3.1.1.js"></script>
-
-<script type="text/javascript" src="/public/datatables/js/jquery.dataTables.js"></script>
- <script type="text/javascript" src="/public/datatables/js/dataTables.bootstrap.js"></script>  
+    <script type="text/javascript" src="/public/js/jquery-3.1.1.js"></script>
+    <script type="text/javascript" src="/public/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/public/datatables/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="/public/datatables/js/dataTables.bootstrap.js"></script>  
       
     @yield('meta')
 </head>

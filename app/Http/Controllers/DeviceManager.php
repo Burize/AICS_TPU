@@ -99,19 +99,19 @@ class DeviceManager extends Controller
             'lend_to'=>'required|date',
             'user_id'=>'required|numeric|min:0',
             'device_id'=>'required|numeric|min:0',
-           // 'amount'=>'required|min:1|numeric|max:{$amount}',
+            'amount'=>'required|min:1|numeric|max:{$amount}',
         ]);
         
         
         $lend = new Lend;
         $lend->lend_at = $r->lend_at;
         $lend->lend_to = $r->lend_to;
- 
+        $lend->lend_amount = $r->amount;
         $lend->Device()->associate(Device::find($r->device_id));
         $lend->User()->associate(User::find($r->user_id));
         $lend->save();
         
-        Storage::Reduce($r->device_id,1);
+        Storage::Reduce($r->device_id,$r->amount);
        
         return redirect()->route('main');
         }

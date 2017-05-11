@@ -18,11 +18,13 @@ class Lend extends Model
     return $this->belongsTo('App\Models\Device','device_id','id');
     }
     
-    public static function _Return($id)
+    public static function _Return($id, $amount )
     {
        $l = Lend::find($id);
-        $l->return_at = date('Y-m-d',time());
+        $l->return_amount+=$amount;
+        if( $l->return_amount == $l->lend_amount)
+            $l->return_at = date('Y-m-d',time());
         $l->save();
-        return $l->return_at;
+        //return $l->return_at;
     }
 }

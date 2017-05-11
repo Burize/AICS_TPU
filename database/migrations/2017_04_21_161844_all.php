@@ -27,6 +27,7 @@ class All extends Migration
             $t->string('email', 50)->unique();
             $t->string('fio',100);
             $t->string('user_type',30)->default("user");
+            $t->char('token',6)->unique();
             $t->integer('group_id')->unsigned()->nullable();
             $t->foreign('group_id')->references('id')->on('groups');
             $t->rememberToken();
@@ -59,6 +60,8 @@ class All extends Migration
             $t->date('lend_at');
             $t->date('lend_to');
             $t->date('return_at')->nullable();
+            $t->smallInteger('lend_amount')->unsigned();
+            $t->smallInteger('return_amount')->unsigned()->default(0);
             $t->timestamps();
         });
     }
